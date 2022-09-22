@@ -18,7 +18,6 @@ const main=ref<HTMLElement>()
 const{direction,swiping}=useSwipe(main,{beforeStart:e => e.preventDefault()})
     const route = useRoute()
     const router = useRouter()
-
     const  replace=throtte(()=>{
         const name =(route.name||'Welcome1').toString()
         router.replace(pushMap[name]).then()
