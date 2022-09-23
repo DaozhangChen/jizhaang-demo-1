@@ -10,7 +10,7 @@ export const Navbar =defineComponent({
         const {slots}=context
         return ()=>(
             <div class={s.navbar}>
-                <span class={s.icon_warpper}>
+                <span class={s.icon_wrapper}>
                     {slots.icon?.()}
                 </span>
                 <span class={s.title_wrapper}>
