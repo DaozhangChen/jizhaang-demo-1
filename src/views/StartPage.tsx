@@ -38,7 +38,6 @@ return()=>(
             {refOverlayVisible.value &&
                 <Overlay onClose={()=>refOverlayVisible.value = false}/>
             }
-
                 </div>
             }}
         </MainLayout>
