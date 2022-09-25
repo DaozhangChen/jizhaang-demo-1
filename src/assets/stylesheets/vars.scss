@@ -4,6 +4,7 @@
     --welcome-font-color:rgb(244, 243, 243);
     --welcome-card-bg-color:#FFFFFF;
     --button-bg:#5C33BE;
+    --button-radius: 8px;
     --button-color:#FFFFFF;
     --button-font-size:2.5vh;
     --floatButton-bg:#5C33BE;
@@ -12,5 +13,14 @@
     --overlay-mask-bg:rgba(0,0,0,0.5);
     --overlay-bg:white;
     --top-safe-area-height:24px;
+    --error-color:#E10505;
+    --input-shadow: rgba(0,0,0,0.25);
+    --input-radius: var(--button-radius);
+    --input-border-color: #5c33be;
+    --input-min-height: 48px;
+    --emoji-nav-text-selected: #333;
+    --emoji-nav-text: #999;
+    --error-color: #E10505;
+    
 
 }

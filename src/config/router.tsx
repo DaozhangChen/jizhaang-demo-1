@@ -9,27 +9,43 @@ import { SecondActions } from "../components/SecondActions"
 import { ThirdActions } from "../components/ThirdActions"
 import { ForthActions } from "../components/ForthActions"
 import { StartPage } from "../views/StartPage"
-import {ItemPage} from "../views/ItemPage";
-import {ItemList} from "../components/item/ItemList";
-import {ItemCreate} from "../components/item/ItemCreate";
+import { ItemPage } from "../views/ItemPage";
+import { ItemList } from "../components/item/ItemList";
+import { ItemCreate } from "../components/item/ItemCreate";
+import { TagPage } from "../views/Tagpage"
+import { TagCreate } from "../components/tag/TagCteate"
+import { TagEdit } from "../components/tag/TagEdit"
 
 
-export const routes :RouteRecordRaw[]= [
-    {path:'/',redirect:'/welcome'},
-    {path:'/welcome',component:Welcome,
-    children:[
-        {path:'',
-        redirect:'/welcome/1'},
-        {path:'1',name:'Welcome1',components:{main:First,footer:FirstActions},},
-        {path:'2',name:'Welcome2',components:{main:Second,footer:SecondActions},},
-        {path:'3',name:'Welcome3',components:{main:Third,footer:ThirdActions},},
-        {path:'4',name:'Welcome4',components:{main:Forth,footer:ForthActions},},
-    ]},
-    {path:'/start',component:StartPage},
-    {path:'/items',component:ItemPage,
-        children:[
-            {path:'',component:ItemList},
-            {path:'create',component: ItemCreate},
-        ]}
-  ]
-  
+export const routes: RouteRecordRaw[] = [
+    { path: '/', redirect: '/welcome' },
+    {
+        path: '/welcome', component: Welcome,
+        children: [
+            {
+                path: '',
+                redirect: '/welcome/1'
+            },
+            { path: '1', name: 'Welcome1', components: { main: First, footer: FirstActions }, },
+            { path: '2', name: 'Welcome2', components: { main: Second, footer: SecondActions }, },
+            { path: '3', name: 'Welcome3', components: { main: Third, footer: ThirdActions }, },
+            { path: '4', name: 'Welcome4', components: { main: Forth, footer: ForthActions }, },
+        ]
+    },
+    { path: '/start', component: StartPage },
+    {
+        path: '/items', component: ItemPage,
+        children: [
+            { path: '', component: ItemList },
+            { path: 'create', component: ItemCreate },
+        ]
+    },
+    {
+        path: '/tags', component: TagPage,
+        children: [
+            { path: 'create', component: TagCreate },
+            { path: ':id', component: TagEdit }
+        ]
+    }
+]
+
