@@ -1,9 +1,12 @@
 import {defineComponent, PropType, ref} from "vue";
 import s from './InputPad.module.scss'
 import date from '../../assets/icons/date.svg'
-
 import { time } from '../../shared/time';
-import { Button } from 'vant';
+
+import 'vant/es/datetime-picker/style/index';
+import 'vant/es/popup/style/index';
+import { DatetimePicker, Popup } from "vant/es";
+
 
 export const InputPad = defineComponent({
     props:{
@@ -42,7 +45,11 @@ export const InputPad = defineComponent({
                     <img src={date} class={s.icon}/>
                     <span><span>
             <span onClick={showDatePicker}>{time(refDate.value).format()}</span>
-            <Button />
+            <Popup position='bottom' v-model:show={refDatePickerVisible.value}>
+              <DatetimePicker value={refDate.value} type="date" title="选择年月日"
+                onConfirm={setDate} onCancel={hideDatePicker}
+              />
+            </Popup>
           </span></span>
                 </span>
                 <span class={s.amount}>199.99</span>
