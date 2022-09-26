@@ -3,18 +3,29 @@ import { MainLayout } from "../../layouts/MainLayout";
 import comeback from '../../assets/icons/comeback.svg'
 import s from './TagCreate.module.scss'
 import { EmojiSelect } from "../../shared/EmojiSelect";
+import {Button} from "../../shared/Button";
+
 export const TagCreate = defineComponent({
     setup: () => {
         const formData = reactive({
             name: '',
             sign: '',
         })
+        const onSubmit=(e:Event)=>{
+            // e.preventDefault()
+            // const rules=[
+            //     {key:'name',required:true,message:'必填'},
+            //     {key:'name',pattern:/^.{0,4}$/,message:'只能填1到4个字符'},
+            //     {key:'sign',required:true,},
+            // ]
+            // const error =validate(formData,rules)
+        }
         return () =>
             <MainLayout>{{
                 title: () => '新建标签',
                 icon: () => <img src={comeback} onClick={() => { }} />,
                 default: () => (
-                    <form class={s.form}>
+                    <form class={s.form} onSubmit={onSubmit}>
                         <div class={s.formRow}>
                             <label class={s.formLabel}>
                                 <span class={s.formItem_name}>标签名</span>
