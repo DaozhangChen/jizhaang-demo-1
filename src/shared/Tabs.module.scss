@@ -4,11 +4,12 @@
     justify-content: space-between;
     align-items: center;
     color: white;
+    background: var(--welcome-bg-bottom);
     >li{
       flex-grow: 1;
       flex-shrink: 0;
       padding: 12px 0;
-      background: var(--welcome-bg-bottom);
+
       &.selected{
         position: relative;
         &::after{

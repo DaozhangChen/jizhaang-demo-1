@@ -1,33 +1,44 @@
 import {defineComponent, PropType} from "vue";
 import s from './Tabs.module.scss'
 export const Tabs = defineComponent({
-    props:{
-        selected:{
-            type:String as PropType<string>,
-            required:false,
+    props: {
+        classPrefix: {
+            type: String
         },
+        selected: {
+            type: String as PropType<string>,
+            required: false,
+        },
+        onUpdateSelected: {
+            type: Function as PropType<(name: string) => void>,
+            required: false,
+        }
     },
-    setup:(props,context)=>{
-        return  ()=> {
+    setup: (props, context) => {
+        return () => {
             const tabs = context.slots.default?.()
             if (!tabs) return () => null
-            for (const element of tabs) {
-                if (element.type !== Tab) {
-                    throw new Error('<Tab> only accepts <Tab> as children')
+            for (let i = 0; i < tabs.length; i++) {
+                if (tabs[i].type !== Tab) {
+                    throw new Error('<Tabs> only accepts <Tab> as children')
                 }
             }
-           return <div class={s.tabs}>
-               <nav>
-               <ol class={s.tabs_nav}>
-             {tabs.map(item=>
-          <li class={item.props?.name===props.selected?s.selected:''}
-               onClick={()=>context.emit('update:selected',item.props?.name)}
-          >{item.props?.name}</li>)}
-               </ol>
-           </nav>
-               <div>
-                   {tabs.find(item => item.props?.name===props.selected)}
-               </div>
+            const cp = props.classPrefix
+            return <div class={[s.tabs, cp + '_tabs']}>
+                <ol class={[s.tabs_nav, cp + '_tabs_nav']}>
+                    {tabs.map(item =>
+                        <li class={[
+                            item.props?.name === props.selected ? [s.selected, cp + '_selected'] : '',
+                            cp + '_tabs_nav_item'
+                        ]}
+                            onClick={() => context.emit('update:selected', item.props?.name)}
+                        >
+                            {item.props?.name}
+                        </li>)}
+                </ol>
+                <div>
+                    {tabs.find(item => item.props?.name === props.selected)}
+                </div>
             </div>
         }
     }

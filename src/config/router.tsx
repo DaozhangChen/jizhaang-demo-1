@@ -36,7 +36,7 @@ export const routes: RouteRecordRaw[] = [
     {
         path: '/items', component: ItemPage,
         children: [
-            { path: '', component: ItemList },
+            { path: 'list', component: ItemList },
             { path: 'create', component: ItemCreate },
         ]
     },
