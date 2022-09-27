@@ -8,6 +8,7 @@ import {Time} from "../../shared/time";
 import 'vant/es/overlay/style/index';
 import { Overlay } from "vant/es";
 import {Form, FormItem} from "../../shared/From";
+import {isEmptyValue} from "vant/es/field/utils";
 
 export const ItemList = defineComponent({
     setup:(props,context)=>{
@@ -31,22 +32,24 @@ export const ItemList = defineComponent({
                 end:time.lastDayOfYear()
             }
         ]
-        watchEffect(() => {
-            if (refSelected.value === '自定义时间') {
-                refOverlayVisible.value = true
-            }
-        })
+
         const refOverlayVisible = ref(false)
         const onSubmitCustomTime = (e: Event) => {
             e.preventDefault()
             refOverlayVisible.value = false
+        }
+        const onSelect=(value:string)=>{
+            if (value==='自定义时间'){
+                refOverlayVisible.value=true
+            }
         }
         return ()=>(
             <MainLayout>{{
                 title: () => '山竹记账',
                 icon: () => <img src={comeback} class={s.navIcon}/>,
                 default: () => (<>
-                    <Tabs classPrefix={'customTabs'} v-model:selected={refSelected.value}>
+                    <Tabs classPrefix={'customTabs'} v-model:selected={refSelected.value}
+                     onUpdate:selected={onSelect}>
                         <Tab name='本月'>
                             <ItemSummary
                             startDate={timeList[0].start.format()}
@@ -78,7 +81,7 @@ export const ItemList = defineComponent({
                                     <FormItem label='结束时间' v-model={customTime.end} type='date' />
                                     <FormItem>
                                         <div class={s.actions}>
-                                            <button type="button">取消</button>
+                                            <button type="button" onClick={()=>refOverlayVisible.value=false}>取消</button>
                                             <button type="submit">确认</button>
                                         </div>
                                     </FormItem>
