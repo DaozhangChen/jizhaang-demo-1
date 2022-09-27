@@ -1,6 +1,6 @@
 .navbar{
   background:linear-gradient(to bottom,var(--welcome-bg-top),var(--welcome-bg-bottom));
- color: #FFFFFF;
+  color: #FFFFFF;
   display: flex;
   justify-content: flex-start;
   align-items: center;
@@ -10,6 +10,7 @@
 .title_wrapper{
   font-size: 24px;
   margin-left: 12px;
+  padding: 10px 0;
 }
 .icon_wrapper{
   width: 36px;

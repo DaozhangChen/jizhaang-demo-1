@@ -9,6 +9,7 @@ import 'vant/es/overlay/style/index';
 import { Overlay } from "vant/es";
 import {Form, FormItem} from "../../shared/From";
 import {isEmptyValue} from "vant/es/field/utils";
+import {OverlayIcon} from "../../shared/Overlay";
 
 export const ItemList = defineComponent({
     setup:(props,context)=>{
@@ -46,7 +47,7 @@ export const ItemList = defineComponent({
         return ()=>(
             <MainLayout>{{
                 title: () => '山竹记账',
-                icon: () => <img src={comeback} class={s.navIcon}/>,
+                icon: () => <OverlayIcon />,
                 default: () => (<>
                     <Tabs classPrefix={'customTabs'} v-model:selected={refSelected.value}
                      onUpdate:selected={onSelect}>
