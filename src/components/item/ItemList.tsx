@@ -3,6 +3,7 @@ import s from './ItemList.module.scss'
 import {MainLayout} from "../../layouts/MainLayout";
 import comeback from "../../assets/icons/comeback.svg";
 import {Tab, Tabs} from "../../shared/Tabs";
+import {ItemSummary} from "./ItemSummary";
 
 export const ItemList = defineComponent({
     props:{
@@ -19,16 +20,16 @@ export const ItemList = defineComponent({
                 default: () => (<>
                     <Tabs classPrefix={'customTabs'} v-model:selected={refSelected.value}>
                         <Tab name='本月'>
-                            List 1
+                            <ItemSummary />
                         </Tab>
                         <Tab name='上月'>
-                            List 2
+                            <ItemSummary />
                         </Tab>
                         <Tab name='今年'>
-                            List 3
+                            <ItemSummary />
                         </Tab>
                         <Tab name='自定义时间'>
-                            List 4
+                            <ItemSummary />
                         </Tab>
                     </Tabs>
                 </>),
