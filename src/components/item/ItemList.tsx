@@ -1,14 +1,12 @@
-import {defineComponent, PropType, reactive, ref, watchEffect} from "vue";
+import {defineComponent,  reactive, ref} from "vue";
 import s from './ItemList.module.scss'
 import {MainLayout} from "../../layouts/MainLayout";
-import comeback from "../../assets/icons/comeback.svg";
 import {Tab, Tabs} from "../../shared/Tabs";
 import {ItemSummary} from "./ItemSummary";
 import {Time} from "../../shared/time";
 import 'vant/es/overlay/style/index';
 import { Overlay } from "vant/es";
 import {Form, FormItem} from "../../shared/From";
-import {isEmptyValue} from "vant/es/field/utils";
 import {OverlayIcon} from "../../shared/Overlay";
 
 export const ItemList = defineComponent({
