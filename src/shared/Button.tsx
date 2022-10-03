@@ -6,7 +6,7 @@ interface Props{
 export const Button = defineComponent({
     props:{
         onClick:{
-            type:Function as PropType<()=>void>
+            type:Function as PropType<(e:MouseEvent)=>void>
         },
         level:{
             type:String as PropType<'important'|'normal'|'danger'>,
