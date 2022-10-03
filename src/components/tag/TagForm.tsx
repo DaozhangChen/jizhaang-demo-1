@@ -38,7 +38,7 @@ export const TagForm=defineComponent({
                         <input v-model={formData.name} class={[s.formItem, s.input, s.error]}></input>
                     </div>
                     <div class={s.formItem_errorHint}>
-                        <span>{errors['name'] ?.[0]}</span>
+                        <span>{errors['name'] ?.[0]　??'　'}</span>
                     </div>
                 </label>
             </div>
@@ -49,7 +49,7 @@ export const TagForm=defineComponent({
                         <EmojiSelect v-model={formData.sign} class={[s.formItem, s.emojiList, s.error]}/>
                     </div>
                     <div class={s.formItem_errorHint}>
-                        <span>{errors['sign']?.[0]}</span>
+                        <span>{errors['sign']?.[0]　??　'　'}</span>
                     </div>
                 </label>
             </div>

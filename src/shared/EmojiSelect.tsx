@@ -6,10 +6,8 @@ export const EmojiSelect = defineComponent({
         modelValue: {
             type: String as PropType<string>
         },
-        onUpdateModelValue: {
-            type: Function as PropType<(emoji: string) => void>
-        }
     },
+    emits:['update:modelValue'],
     setup: (props, context) => {
         const refSelected = ref(0)
         const table: [string, string[]][] = [

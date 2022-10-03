@@ -15,10 +15,9 @@ export const validate = <T extends FData>(formData: T, rules: Rules<T>) => {
         [k in keyof T]?: string[]
     }
     const errors: Errors = {}
-    rules.map(rule => {
+    rules.forEach(rule => {
         const { key, type, message } = rule
         const value = formData[key]
-        console.log(value)
         switch (type) {
             case 'required':
                 if (value === null || value === undefined || value === '') {
