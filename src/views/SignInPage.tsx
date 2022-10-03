@@ -7,6 +7,8 @@ import {Button} from "../shared/Button";
 import {validate} from "../shared/validate";
 import mangosteen from '../assets/icons/mangosteen.svg'
 import axios from "axios";
+import {http} from "../shared/Http";
+import {useBool} from "../hooks/useBool";
 export const SignInPage =defineComponent({
     setup:(props,context)=>{
         const formData=reactive({
@@ -18,6 +20,7 @@ export const SignInPage =defineComponent({
             code:[]
         })
         const refValidationCode=ref<any>()
+        const {ref:refDisabled,toggle,on:disabled,off:enable}=useBool(false)
         const onSubmit =(e:Event)=>{
             e.preventDefault()
             Object.assign(errors,{email:[],code:[]})
@@ -27,10 +30,17 @@ export const SignInPage =defineComponent({
                 {key:'code',type:'required',message:'必填'}
             ]))
         }
+        const onError=(error:any)=>{
+            if (error.response.status===422){
+                Object.assign(errors,error.response.data.errors)
+            }
+            throw error
+        }
         const onClickSendValidationCode= async ()=> {
-            const response= await axios.post('/api/v1/validation_codes', {email: formData.email})
-                .catch(()=>{})
-            console.log(response)
+            disabled()
+            const response= await http.post('/validation_codes', {email: formData.email})
+                .catch(onError)
+                .finally(()=>{enable})
             refValidationCode.value.startCount()
         }
         return ()=>(
@@ -49,6 +59,7 @@ export const SignInPage =defineComponent({
                                      error={errors.email?.[0]}/>
                            <FormItem ref={refValidationCode} label='验证码' type='validationCode' v-model={formData.code}
                                      placeholder='请输入六位数'
+                                     disabled={refDisabled.value}
                                      onClick={onClickSendValidationCode}
                                      error={errors.code?.[0]}/>
                            <FormItem style={{paddingTop:'96px'}}>

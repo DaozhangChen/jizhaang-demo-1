@@ -6,6 +6,7 @@ import { EmojiSelect } from './EmojiSelect';
 import s from './From.module.scss';
 import { Time } from './time';
 import {Button} from "./Button";
+import {getFriendlyError} from "./getFriendlyError";
 export const Form = defineComponent({
     props: {
         onSubmit: {
@@ -41,7 +42,8 @@ export const FormItem = defineComponent({
         countFrom:{
             type:Number,
             default:60
-        }
+        },
+        disabled:Boolean,
     },
     emit:['update:modelValue'],
     setup: (props, context) => {
@@ -75,7 +77,7 @@ export const FormItem = defineComponent({
                     return <>
                     <input  class={[s.formItem, s.input,s.validationCodeInput] }
                             placeholder={props.placeholder}/>
-                        <Button disabled={isCounting.value} onClick={props.onClick} class={[s.formItem, s.button, s.validationCodeButton]}>
+                        <Button disabled={isCounting.value || props.disabled} onClick={props.onClick} class={[s.formItem, s.button, s.validationCodeButton]}>
                             {isCounting.value ? `${count.value}` :'发送验证码'}
                         </Button>
                     </>
@@ -114,7 +116,7 @@ export const FormItem = defineComponent({
                         {content.value}
                     </div>
                     <div class={s.formItem_errorHint}>
-                        <span>{props.error ?? '　'}</span>
+                        <span>{props.error ? getFriendlyError(props.error): '　'}</span>
                     </div>
                 </label>
             </div>
