@@ -41,12 +41,6 @@ export const routes: RouteRecordRaw[] = [
     { path: '/start', component: StartPage },
     {
         path: '/items', component: ItemPage,
-        beforeEnter:async (_to,_from,next)=>{
-            await http.get('/me').catch(()=>{
-                next('/sign_in?return_to=' + _to.path)
-            })
-            next()
-        },
         children: [
             { path: 'list', component: ItemList },
             { path: 'create', component: ItemCreate },
