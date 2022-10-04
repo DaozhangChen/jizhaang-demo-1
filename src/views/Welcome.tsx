@@ -27,6 +27,9 @@ watchEffect(()=>{
         replace()
     }
 })
+    const onClick=()=>{
+    localStorage.setItem('skipFeatures','yes')
+    }
 return () =>
 <div class={s.wrapper}>
 <header>
@@ -49,14 +52,12 @@ return () =>
 
 </main>
 <footer>
+    <span onClick={onClick}>
+     {/*解决bug*/}
     <RouterView name="footer"/>
+        </span>
 </footer>
 </div> 
 },
-watch:{
-    $route(to,from){
-            console.log(from.path);//从哪来
-            console.log(to.path);//到哪去
-     }
-   }
+
 })

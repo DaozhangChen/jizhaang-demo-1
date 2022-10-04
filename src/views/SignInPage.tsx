@@ -6,11 +6,10 @@ import {Form, FormItem} from "../shared/From";
 import {Button} from "../shared/Button";
 import {hasError,  validate} from "../shared/validate";
 import mangosteen from '../assets/icons/mangosteen.svg'
-import axios from "axios";
 import {http} from "../shared/Http";
 import {useBool} from "../hooks/useBool";
-import {history} from "../shared/history";
 import {useRoute, useRouter} from "vue-router";
+import {refreshMe} from "../shared/me";
 export const SignInPage =defineComponent({
     setup:(props,context)=>{
         const formData=reactive({
@@ -34,11 +33,11 @@ export const SignInPage =defineComponent({
                 {key:'code',type:'required',message:'必填'}
             ]))
             if (!hasError(errors)){
-                const response=await http.post<{jwt:string}>('/session',formData)
-                    .catch(onError)
-                localStorage.setItem('jwt',response.data.jwt)
-                // router.push('sign_in?return_to='+encodeURIComponent(route.fullPath))
-                const returnTo=route.query.retuen_to?.toString()
+                const response = await http.post<{ jwt: string }>('/session', formData)
+                localStorage.setItem('jwt', response.data.jwt)
+                // router.push('/sign_in?return_to='+ encodeURIComponent(route.fullPath))
+                const returnTo = route.query.return_to?.toString()
+                refreshMe()
                 router.push(returnTo || '/')
 
             }
