@@ -10,35 +10,40 @@ import { DatetimePicker, Popup } from "vant/es";
 
 export const InputPad = defineComponent({
     props:{
-        name:{
-            type:String as PropType<string>
+        happenAt:String,
+        amount:Number,
+        onSubmit:{
+            type:Function as PropType<()=>void>
         }
     },
     setup:(props,context)=>{
-        const now = new Date()
-        const refDate = ref<Date>(now)
-        const refAmount=ref('')
-const appendText=(n:Number|String)=>{
-    if (refAmount.value.length >= 13) {
-        return
-      }
-    if(n.toString()==='.'){
-        if(refAmount.value===''){
-            return
-        }else if(refAmount.value.indexOf('.')!==-1){
-            return
+
+        const appendText = (n: number | string) => {
+            const nString = n.toString()
+            const dotIndex = refAmount.value.indexOf('.')
+            if (refAmount.value.length >= 13) {
+                return
+            }
+            if (dotIndex >= 0 && refAmount.value.length - dotIndex > 2) {
+                return
+            }
+            if (nString === '.') {
+                if (dotIndex >= 0) { // 已经有小数点了
+                    return
+                }
+            } else if (nString === '0') {
+                if (dotIndex === -1) { // 没有小数点
+                    if (refAmount.value === '0') { // 没小数点，但是有0
+                        return
+                    }
+                }
+            } else {
+                if (refAmount.value === '0') {
+                    refAmount.value = ''
+                }
+            }
+            refAmount.value += n.toString()
         }
-    }
-    if(n.toString()==='0'){
-        if(refAmount.value.length===1 && refAmount.value.indexOf('0')===0){
-            return
-        }
-    }
-    if(refAmount.value.indexOf('0')===0 && n.toString()!=='0' && n.toString()!=='.' && refAmount.value.length===1){
-        refAmount.value=n.toString()
-    }else{
-    refAmount.value += n.toString()}
-}
         const buttons=[
             {text:'1',onClick:()=>{appendText(1)}},
             {text:'2',onClick:()=>{appendText(2) }},
@@ -52,21 +57,27 @@ const appendText=(n:Number|String)=>{
             {text:'0',onClick:()=>{appendText(0) }},
             {text:'.',onClick:()=>{appendText('.') }},
             {text:'清空',onClick:()=>{refAmount.value=''}},
-            {text:'提交',onClick:()=>{ }},
+            {text:'提交',onClick:()=>{
+                context.emit('update:amount',parseFloat(refAmount.value) * 100)
+                props.onSubmit?.()
+            }
+            },
         ]
         
         const refDatePickerVisible = ref(false)
         const showDatePicker = () => refDatePickerVisible.value = true
         const hideDatePicker = () => refDatePickerVisible.value = false
-        const setDate = (date:Date) => { refDate.value = date; hideDatePicker() }
+        const setDate = (date:Date) => { context.emit('update:happenAt',date.toISOString());
+            hideDatePicker() }
+        const refAmount = ref(props.amount ? (props.amount / 100).toString() : '0')
         return ()=><>
             <div class={s.dateAndAmount}>
                 <span class={s.date} >
                     <img src={date} class={s.icon}/>
                     <span><span>
-            <span onClick={showDatePicker}>{new Time(refDate.value).format()}</span>
+            <span onClick={showDatePicker}>{new Time(props.happenAt).format()}</span>
             <Popup position='bottom' v-model:show={refDatePickerVisible.value}>
-              <DatetimePicker value={refDate.value} type="date" title="选择年月日"
+              <DatetimePicker value={props.happenAt} type="date" title="选择年月日"
                 onConfirm={setDate} onCancel={hideDatePicker}
               />
             </Popup>
