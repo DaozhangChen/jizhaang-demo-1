@@ -11,6 +11,7 @@ import 'vant/es/dialog/style/index';
 import {Dialog} from "vant/es";
 import {error} from "echarts/types/src/util/log";
 import {AxiosError} from "axios";
+import {BackIcon} from "../../shared/BackIcon";
 export const ItemCreate = defineComponent({
     props: {
         name: {
@@ -43,7 +44,7 @@ export const ItemCreate = defineComponent({
         return () => (
             <MainLayout class={s.layout}>{{
                 title: () => '记一笔',
-                icon: () => <img src={comeback} class={s.navIcon}/>,
+                icon: () => <BackIcon />,
                 default: () => <>
                     <div class={s.wrapper}>
                         <Tabs v-model:selected={formData.kind} class={s.tabs}>
