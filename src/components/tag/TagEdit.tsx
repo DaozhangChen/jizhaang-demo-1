@@ -1,14 +1,12 @@
 import {defineComponent, markRaw, reactive} from "vue";
-import {Rules, validate} from "../../shared/validate";
 import {MainLayout} from "../../layouts/MainLayout";
 import comeback from "../../assets/icons/comeback.svg";
 import s from "./Tag.module.scss";
-import {EmojiSelect} from "../../shared/EmojiSelect";
 import {Button} from "../../shared/Button";
 import {TagForm} from "./TagForm";
-import {useRoute} from "vue-router";
+import {useRoute, useRouter} from "vue-router";
 import {http} from "../../shared/Http";
-import * as assert from "assert";
+import {Dialog} from "vant/es";
 export const TagEdit =defineComponent({
     setup: () => {
         const route=useRoute()
@@ -16,21 +14,32 @@ export const TagEdit =defineComponent({
         if (Number.isNaN(numberId)){
             return
         }
-        const onDelete=async ()=>{
-           await http.delete()
+        const router=useRouter()
+        const onError=()=>{
+            Dialog.alert({title:'提示',message:'删除失败'})
         }
-        const onDeleteHard=()=>{}
+        const onDelete=async (options?:{withItems?:boolean})=>{
+            await Dialog.confirm({
+                title:'确认',
+                message:'你真的要删除吗？'
+            })
+            await http.delete(`/tags/${numberId}`,{
+               withItem:options?.withItems?'true':'false'
+           }).catch(onError)
+            router.back()
+        }
+
         return () =>
             <MainLayout>{{
-                title: () => '新建标签',
+                title: () => '编辑标签',
                 icon: () => <img src={comeback} onClick={() => { }} />,
                 default: () => (<>
                     <TagForm id={numberId}/>
                         <div class={s.actions}>
                             <Button level='danger' class={s.removeTags}
-                                    onClick={()=>{onDelete} }>删除标签</Button>
+                                    onClick={()=>onDelete()}>删除标签</Button>
                             <Button level='danger' class={s.removeTagsAndItems}
-                                    onClick={()=>{onDeleteHard} }>删除标签和记账</Button>
+                                    onClick={()=>onDelete({withItems:true}) }>删除标签和记账</Button>
                         </div>
                     </>
                 )
