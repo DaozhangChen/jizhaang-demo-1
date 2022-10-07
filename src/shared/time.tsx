@@ -50,7 +50,10 @@ export class Time {
     return new Time(new Date(this.date.getFullYear() + 1, 0, 0, 0, 0, 0));
   }
   getRaw() {
-    return this.date
+    return this.date.getTime()
+  }
+  getTimestamp() {
+    return this.date.valueOf()
   }
   add(amount: number, unit: 'year' | 'month' | 'day' | 'hour' | 'minute' | 'second' | 'millisecond') {
     // return new Time but not change this.date

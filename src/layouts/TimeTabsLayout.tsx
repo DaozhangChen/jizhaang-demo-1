@@ -6,7 +6,6 @@ import {FormItem, Form} from "../shared/From";
 import {Time} from "../shared/time";
 import {OverlayIcon} from "../shared/Overlay";
 import {MainLayout} from "./MainLayout";
-import {ItemSummary} from "../components/item/ItemSummary";
 import {Tab, Tabs} from "../shared/Tabs";
 const demo = defineComponent({
     props: {
@@ -25,6 +24,10 @@ export const TimeTabsLayout = defineComponent({
         component: {
             type: Object as PropType<typeof demo>,
             required: true
+        },
+        rerenderOnSwitchTab:{
+            type:Boolean,
+            default:true
         }
     },
     setup: (props, context) => {
@@ -70,7 +73,7 @@ export const TimeTabsLayout = defineComponent({
                 icon: () => <OverlayIcon />,
                 default: () => (<>
                     <Tabs classPrefix='customTabs' v-model:selected={refSelected.value}
-                          onUpdate:selected={onSelect}>
+                          onUpdate:selected={onSelect} rerenderOnSelect={props.rerenderOnSwitchTab}>
                         <Tab name='本月'>
                             <props.component
                                 startDate={timeList[0].start.format()}
