@@ -39,15 +39,16 @@ export const Charts = defineComponent({
             })
         })
 
+
         onMounted(async ()=>{
             const response = await http.get<{groups: Data1, summary: number}>('/items/summary',{
                 happen_after: props.startDate,
                 happen_before: props.endDate,
                 kind: kind.value,
-                _mock: 'itemSummary'
+                _mock: 'itemSummary',
+                group_by:'happen_at',
+
             })
-            console.log('response.data')
-            console.log(response.data)
             data1.value = response.data.groups
         })
         return () => (
