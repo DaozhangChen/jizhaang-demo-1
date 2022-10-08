@@ -9,6 +9,8 @@ import {Time} from "../../shared/time";
 
 type Data1Item={happen_at:string,amount:number}
 type Data1=Data1Item[]
+type Data2Item={tag_id:number,amount:number}
+type Data2=Data2Item[]
 const DAY=24*3600*1000
 
 export const Charts = defineComponent({
@@ -51,6 +53,28 @@ export const Charts = defineComponent({
             })
             data1.value = response.data.groups
         })
+
+        //Data2
+
+        const betterData2 =computed<{name:string,value:number}[]>(()=>
+            data2.value.map((item)=>({
+                name:item.tag.name,
+                value:item.amount
+            }))
+        )
+
+        const data2=ref<Data2>([])
+        onMounted(async ()=>{
+            const response=await http.get<{groups:Data2;summary:number}>('/item/summary',{
+                happen_after:props.startDate,
+                happen_before:props.endDate,
+                kind:kind.value,
+                group_by:'tag_id',
+                _mock:'itemSummary'
+            })
+            data2.value=response.data.groups
+        })
+
         return () => (
             <div class={s.wrapper}>
                 <FormItem label='类型' type="select" options={[
@@ -58,7 +82,7 @@ export const Charts = defineComponent({
                     { value: 'income', text: '收入' }
                 ]} v-model={kind.value} />
                 <LineChart data={betterData1.value}/>
-                <PieChart />
+                <PieChart data={betterData2.value}/>
                 <Bars />
             </div>
         )
