@@ -18,6 +18,7 @@ import { TagEdit } from "../components/tag/TagEdit"
 import {SignInPage} from "../views/SignInPage";
 import {StatisticsPage} from "../views/StatisticsPage";
 import {http} from "../shared/Http";
+import {ComingSoon} from "../shared/ComingSoon";
 
 
 export const routes: RouteRecordRaw[] = [
@@ -25,7 +26,7 @@ export const routes: RouteRecordRaw[] = [
     {
         path: '/welcome', component: Welcome,
         beforeEnter:(_to,_from,next)=>{
-            localStorage.getItem('skipFeatures')==='yes' ? next('/start') : next()
+            localStorage.getItem('skipFeatures')==='yes' ? next('/items') : next()
         },
         children: [
             {
@@ -58,6 +59,10 @@ export const routes: RouteRecordRaw[] = [
     },
     {
         path:'/statistics',component:StatisticsPage
+    },{
+        path: '/export', component: ComingSoon
+    },{
+        path: '/notify', component: ComingSoon
     }
 ]
 

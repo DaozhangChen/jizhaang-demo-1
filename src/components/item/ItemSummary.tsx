@@ -5,6 +5,9 @@ import {FloatButton} from "../../shared/FloatButton";
 import {Button} from "../../shared/Button";
 import {Money} from "../../shared/Money";
 import {Datetime} from "../../shared/Datetime";
+import pig from "../../assets/icons/pig.svg";
+import { Center } from '../../shared/Center'
+import { RouterLink } from 'vue-router'
 
 export const ItemSummary=defineComponent({
     props:{
@@ -71,7 +74,7 @@ export const ItemSummary=defineComponent({
         })
         return ()=>(
             <div class={s.wrapper}>
-                {items.value ? (
+                {(items.value && items.value.length > 0) ? (
                     <>
                     <ul class={s.total}>
                         <li>
@@ -111,9 +114,20 @@ export const ItemSummary=defineComponent({
                     </div>
                     </>
                 ) : (
-                    <div>记录为空</div>
+                    <>
+                        <Center class={s.pig_wrapper}>
+                            <img src={pig} alt={pig} class={s.pig}/>
+                        </Center>
+                        <div class={s.button_wrapper}>
+                            <RouterLink to="/items/create">
+                                <Button class={s.button}>开始记账</Button>
+                            </RouterLink>
+                        </div>
+                    </>
                 )}
-                <FloatButton />
+                <RouterLink to='/items/create'>
+                    <FloatButton/>
+                </RouterLink>
             </div>
         )
     },
