@@ -75,6 +75,15 @@ export const Charts = defineComponent({
             data2.value=response.data.groups
         })
 
+        //data3
+        const betterData3 = computed<{ tag: Tag; amount: number; percent: number }[]>(() => {
+            const total = data2.value.reduce((sum, item) => sum + item.amount, 0)
+            return data2.value.map((item) => ({
+                ...item,
+                percent: Math.round((item.amount / total) * 100)
+            }))
+        })
+
         return () => (
             <div class={s.wrapper}>
                 <FormItem label='类型' type="select" options={[
@@ -83,7 +92,7 @@ export const Charts = defineComponent({
                 ]} v-model={kind.value} />
                 <LineChart data={betterData1.value}/>
                 <PieChart data={betterData2.value}/>
-                <Bars />
+                <Bars data={betterData3.value}/>
             </div>
         )
     }
