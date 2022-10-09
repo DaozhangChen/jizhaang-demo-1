@@ -8,6 +8,7 @@ import s from "./Overlay.module.scss"
 import menu from "../assets/icons/menu.svg";
 import {mePromise} from "./me";
 import {Dialog} from "vant/es";
+import {useMeStore} from "../stores/useMeStore";
 
 export const Overlay =defineComponent({
     props:{
@@ -16,13 +17,14 @@ export const Overlay =defineComponent({
         }
     },
     setup:(props,context)=>{
+        const meStore=useMeStore()
         const close=()=> {
             props.onClose?.()
         }
         const route=useRoute()
         const me=ref<User>()
         onMounted( async ()=>{
-            const response=await mePromise
+            const response=await meStore.mePromise
             // @ts-ignore
             me.value=response?.data.resource
 

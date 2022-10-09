@@ -8,6 +8,7 @@ import {Datetime} from "../../shared/Datetime";
 import pig from "../../assets/icons/pig.svg";
 import { Center } from '../../shared/Center'
 import { RouterLink } from 'vue-router'
+import {useAfterMe} from "../../hooks/useAfterMe";
 
 export const ItemSummary=defineComponent({
     props:{
@@ -39,7 +40,7 @@ export const ItemSummary=defineComponent({
             hasMore.value = (pager.page - 1) * pager.per_page + resources.length < pager.count
             page.value += 1
         }
-        onMounted(fetchItems)
+        useAfterMe(fetchItems)
 
         watch(()=>[props.startDate,props.endDate], ()=>{
             items.value = []
@@ -64,7 +65,7 @@ export const ItemSummary=defineComponent({
             })
             Object.assign(itemsBalance, response.data)
         }
-        onMounted(fetchItemsBalance)
+        useAfterMe(fetchItemsBalance)
 
         watch(()=>[props.startDate,props.endDate], ()=>{
             Object.assign(itemsBalance, {
