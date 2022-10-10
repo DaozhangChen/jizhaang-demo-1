@@ -9,6 +9,7 @@ import menu from "../assets/icons/menu.svg";
 import {mePromise} from "./me";
 import {Dialog} from "vant/es";
 import {useMeStore} from "../stores/useMeStore";
+import pig from "../assets/icons/pig.svg";
 
 export const Overlay =defineComponent({
     props:{
@@ -35,6 +36,7 @@ export const Overlay =defineComponent({
                 message:'你真的要退出吗'
             })
             localStorage.removeItem('jwt')
+            window.location.reload()
         }
         return ()=><>
             <div class={s.mask} onClick={close}></div>
@@ -56,21 +58,27 @@ export const Overlay =defineComponent({
                     <nav>
                         <ul class={s.action_list}>
                             <li>
+                                <RouterLink to="/items" class={s.action}>
+                                    <img src={pig} class={s.miniIcon}/>
+                                    <span class={s.text}>记账</span>
+                                </RouterLink>
+                            </li>
+                            <li>
                                 <RouterLink to="/statistics" class={s.action}>
-                                <img src={charts}/>
-                                <span>统计图表</span>
+                                <img src={charts} class={s.miniIcon}/>
+                                <span class={s.text}>统计图表</span>
                                 </RouterLink>
                             </li>
                             <li>
                                 <RouterLink to="/export" class={s.action}>
-                                <img src={box}/>
-                                <span>导出数据</span>
+                                <img src={box} class={s.miniIcon}/>
+                                <span class={s.text}>导出数据</span>
                                 </RouterLink>
                             </li>
                             <li>
                                 <RouterLink to="/notify" class={s.action}>
-                                <img src={notice}/>
-                                <span>记账提醒</span>
+                                <img src={notice} class={s.miniIcon}/>
+                                <span class={s.text}>记账提醒</span>
                                 </RouterLink>
                             </li>
                         </ul>

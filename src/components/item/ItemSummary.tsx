@@ -121,8 +121,9 @@ export const ItemSummary=defineComponent({
                     </>
                 ) : (
                     <>
-                        <Center class={s.pig_wrapper}>
+                        <Center class={s.pig_wrapper} direction="|">
                             <img src={pig} alt={pig} class={s.pig}/>
+                            <p>目前没有数据</p>
                         </Center>
                         <div class={s.button_wrapper}>
                             <RouterLink to="/items/create">

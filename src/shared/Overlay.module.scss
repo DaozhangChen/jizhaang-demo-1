@@ -12,6 +12,13 @@
   overflow: hidden;
   text-overflow: ellipsis;
 }
+.miniIcon{
+  width: 33px;
+  height:33px;
+}
+.text{
+  margin-left: 10px;
+}
 .overlay {
   position: fixed;
   z-index: calc(var(--z-index-overlay) + 1);
